@@ -1,4 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
+import Button from "../Button/Button";
+import Input from "../Input/Input";
+import Ul from "../Ul/Ul";
+import Li from "../Li/Li";
+import Span from "../Span/Span";
 
 interface NoteProps {
   color: string;
@@ -75,61 +80,60 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
       style={{ backgroundColor: color }}
     >
       {tasks.map((task, index) => (
-        <input
+        <Input
           key={index}
           value={task}
-          onChange={(e) => {
+          onChange={(e: { target: { value: string } }) => {
             const newTasks = [...tasks];
             newTasks[index] = e.target.value;
             setTasks(newTasks);
           }}
           className="mb-2 p-2 border border-gray-300 rounded"
           placeholder="New task..."
-          onKeyDown={(e) => handleKeyDown(e)}
+          onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
         />
       ))}
-      <button
+      <Button
         onClick={addTask}
         className="bg-blue-500 text-white px-2 py-1 rounded"
       >
-        Add Task
-      </button>
-      <button
+        Add task
+      </Button>
+      <Button
         onClick={handleSave}
         className="bg-green-500 text-white px-2 py-1 rounded ml-2"
       >
         Save
-      </button>
+      </Button>
 
-      <ul className="mt-2">
+      <Ul className="mt-2">
         {taskList.map((task, index) => (
-          <li key={index} className="flex justify-between items-center">
-            <span className={completedTasks[index] ? "line-through" : ""}>
+          <Li key={index} className="flex justify-between items-center">
+            <Span className={completedTasks[index] ? "line-through" : ""}>
               {index + 1}. {task}
-            </span>
-            <button
+            </Span>
+            <Button
               onClick={() => toggleComplete(index)}
               className="ml-4 text-xs text-white"
             >
-              {completedTasks[index] ? "Completed" : "Complete"}
-            </button>
-          </li>
+              {completedTasks[index] ? "Completed" : "Not completed"}
+            </Button>
+          </Li>
         ))}
-      </ul>
+      </Ul>
 
-      <button
+      <Button
         onClick={() => deleteNote(id)}
         className="bg-red-500 text-white px-2 py-1 rounded mt-2"
       >
         Delete
-      </button>
-
-      <button
+      </Button>
+      <Button
         onClick={downloadNote}
         className="absolute top-2 right-2 bg-gray-300 p-2 rounded"
       >
         📥
-      </button>
+      </Button>
     </div>
   );
 }
