@@ -49,9 +49,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
   };
 
   const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    _index: number
-  ) => {
+    e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSave();
     }
@@ -88,7 +86,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
           }}
           className="mb-2 p-2 border border-gray-300 rounded"
           placeholder="New task..."
-          onKeyDown={(e) => handleKeyDown(e, index)}
+          onKeyDown={(e) => handleKeyDown(e)}
         />
       ))}
       <button
