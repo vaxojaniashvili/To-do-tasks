@@ -1,36 +1,3 @@
-// import { useState } from "react";
-
-// const colors = ["red", "blue", "green", "yellow", "purple"];
-
-// export default function FloatingButton({
-//   addNote,
-// }: {
-//   addNote: (color: string) => void;
-// }) {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   return (
-//     <div className="fixed bottom-4 right-4">
-//       <button
-//         onClick={() => setIsOpen(!isOpen)}
-//         className="bg-black text-white p-3 rounded-full"
-//       >
-//         +
-//       </button>
-//       {isOpen && (
-//         <div className="flex flex-col space-y-2 mt-3">
-//           {colors.map((color) => (
-//             <button
-//               key={color}
-//               onClick={() => addNote(color)}
-//               className={`bg-${color}-500 w-12 h-12 rounded-full`}
-//             ></button>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
 import { useState } from "react";
 
 const colors = ["red", "blue", "green", "yellow", "purple"];

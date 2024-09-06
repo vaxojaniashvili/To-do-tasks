@@ -1,14 +1,26 @@
 "use client";
+import { useState, useEffect } from "react";
 import Note from "@/app/common/components/_molecules/Note/Note";
 import FloatingButton from "@/app/common/components/_organisms/FloatingButton";
-import { useState } from "react";
 
 export default function HomePage() {
   const [notes, setNotes] = useState<{ id: string; color: string }[]>([]);
 
+  useEffect(() => {
+    const savedNotes = localStorage.getItem("notes");
+    if (savedNotes) {
+      setNotes(JSON.parse(savedNotes));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
+
   const addNote = (color: string) => {
     const id = Date.now().toString();
-    setNotes([...notes, { id, color }]);
+    const newNote = { id, color };
+    setNotes([...notes, newNote]);
   };
 
   const deleteNote = (id: string) => {

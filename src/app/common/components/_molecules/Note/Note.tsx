@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface NoteProps {
   color: string;
@@ -9,28 +9,58 @@ interface NoteProps {
 export default function Note({ color, id, deleteNote }: NoteProps) {
   const [tasks, setTasks] = useState<string[]>([""]);
   const [taskList, setTaskList] = useState<string[]>([]);
+  const [completedTasks, setCompletedTasks] = useState<boolean[]>([]);
 
-  const addTask = () => setTasks([...tasks, ""]);
+  useEffect(() => {
+    const savedTasks = localStorage.getItem(`tasks-${id}`);
+    const savedCompleted = localStorage.getItem(`completedTasks-${id}`);
+
+    if (savedTasks) {
+      setTaskList(JSON.parse(savedTasks));
+      setTasks(JSON.parse(savedTasks));
+    }
+
+    if (savedCompleted) {
+      setCompletedTasks(JSON.parse(savedCompleted));
+    }
+  }, [id]);
 
   const handleSave = () => {
     if (tasks.some((task) => task.trim() === "")) {
-      alert("Please write in the task");
+      alert("შენახვამდე შეავსე ტასკები");
     } else {
       setTaskList([...tasks]);
-      setTasks([""]);
+      setCompletedTasks([...completedTasks]);
+      localStorage.setItem(`tasks-${id}`, JSON.stringify(tasks));
+      localStorage.setItem(
+        `completedTasks-${id}`,
+        JSON.stringify(completedTasks)
+      );
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const addTask = () => {
+    if (tasks[tasks.length - 1].trim() !== "") {
+      setTasks([...tasks, ""]);
+      setCompletedTasks([...completedTasks, false]);
+    } else {
+      alert("შეავსეთ თასქი");
+    }
+  };
+
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
     if (e.key === "Enter") {
       handleSave();
     }
   };
 
-  const markComplete = (index: number) => {
-    const newTasks = [...taskList];
-    newTasks[index] = `~~${newTasks[index]}~~`;
-    setTaskList(newTasks);
+  const toggleComplete = (index: number) => {
+    const newCompletedTasks = [...completedTasks];
+    newCompletedTasks[index] = !newCompletedTasks[index];
+    setCompletedTasks(newCompletedTasks);
   };
 
   const downloadNote = () => {
@@ -58,7 +88,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
           }}
           className="mb-2 p-2 border border-gray-300 rounded"
           placeholder="New task..."
-          onKeyDown={handleKeyDown}
+          onKeyDown={(e) => handleKeyDown(e, index)}
         />
       ))}
       <button
@@ -77,14 +107,14 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
       <ul className="mt-2">
         {taskList.map((task, index) => (
           <li key={index} className="flex justify-between items-center">
-            <span>
+            <span className={completedTasks[index] ? "line-through" : ""}>
               {index + 1}. {task}
             </span>
             <button
-              onClick={() => markComplete(index)}
-              className="ml-4 text-xs text-gray-500"
+              onClick={() => toggleComplete(index)}
+              className="ml-4 text-xs text-white"
             >
-              Complete
+              {completedTasks[index] ? "Completed" : "Complete"}
             </button>
           </li>
         ))}
