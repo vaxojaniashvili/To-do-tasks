@@ -50,7 +50,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
+    _index: number
   ) => {
     if (e.key === "Enter") {
       handleSave();
