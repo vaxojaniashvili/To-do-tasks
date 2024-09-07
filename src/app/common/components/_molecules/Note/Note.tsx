@@ -132,7 +132,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
         onClick={downloadNote}
         className="absolute top-2 right-2 bg-gray-300 p-2 rounded"
       >
-        📥
+        გადმოწერა
       </Button>
     </div>
   );
