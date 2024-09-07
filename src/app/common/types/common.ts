@@ -31,3 +31,7 @@ export interface SpanTypes {
   children?: React.ReactNode;
   className?: string;
 }
+export interface NoteTypes {
+  id:string
+  color:string
+}

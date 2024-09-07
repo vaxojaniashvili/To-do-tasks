@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import Note from "@/app/common/components/_molecules/Note/Note";
 import FloatingButton from "@/app/common/components/_organisms/FloatingButton";
+import { NoteTypes } from "@/app/common/types";
 
 export default function HomePage() {
-  const [notes, setNotes] = useState<{ id: string; color: string }[]>([]);
+  const [notes, setNotes] = useState<NoteTypes[]>([]);
 
   useEffect(() => {
     const savedNotes = localStorage.getItem("notes");
@@ -15,7 +16,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (notes.length > 0) {
-      localStorage.setItem("notes", JSON.stringify(notes));
+      localStorage.setItem("notes", JSON.stringify(notes)); 
     }
   }, [notes]);
 
