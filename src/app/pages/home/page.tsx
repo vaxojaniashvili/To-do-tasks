@@ -14,7 +14,9 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
+    if (notes.length > 0) {
+      localStorage.setItem("notes", JSON.stringify(notes));
+    }
   }, [notes]);
 
   const addNote = (color: string) => {
@@ -24,7 +26,12 @@ export default function HomePage() {
   };
 
   const deleteNote = (id: string) => {
-    setNotes(notes.filter((note) => note.id !== id));
+    const updatedNotes = notes.filter((note) => note.id !== id);
+    setNotes(updatedNotes);
+
+    if (updatedNotes.length === 0) {
+      localStorage.removeItem("notes");
+    }
   };
 
   return (
