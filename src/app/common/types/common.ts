@@ -7,7 +7,7 @@ export interface ButtonType {
   key?: string | number;
   style?: React.CSSProperties;
 }
-export interface InputTypes {
+export interface InputFieldTypes {
   type?: string;
   className?: string;
   key?: string | number;

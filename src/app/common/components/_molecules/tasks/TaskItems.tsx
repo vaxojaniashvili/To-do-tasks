@@ -1,10 +1,7 @@
 import { useState, useEffect, KeyboardEvent } from "react";
-import Ul from "../Ul/Ul";
-import Li from "../Li/Li";
-import Span from "../Span/Span";
 import Button from "../Button/Button";
-import Input from "../Input/Input";
 import { NoteProps } from "@/app/common/types";
+import { InputField } from "..";
 
 export default function Note({ color, id, deleteNote }: NoteProps) {
   const [tasks, setTasks] = useState<string[]>([""]);
@@ -75,7 +72,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
       style={{ backgroundColor: color }}
     >
       {tasks.map((task, index) => (
-        <Input
+        <InputField
           key={index}
           value={task}
           onChange={(e: { target: { value: string } }) => {
@@ -101,21 +98,21 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
         Save
       </Button>
 
-      <Ul className="mt-2">
+      <ul className="mt-2">
         {taskList.map((task, index) => (
-          <Li key={index} className="flex justify-between items-center">
-            <Span className={completedTasks[index] ? "line-through" : ""}>
+          <li key={index} className="flex justify-between items-center">
+            <span className={completedTasks[index] ? "line-through" : ""}>
               {index + 1}. {task}
-            </Span>
+            </span>
             <Button
               onClick={() => toggleComplete(index)}
               className="ml-4 text-xs text-white"
             >
               {completedTasks[index] ? "Completed" : "Not completed"}
             </Button>
-          </Li>
+          </li>
         ))}
-      </Ul>
+      </ul>
 
       <Button
         onClick={() => deleteNote(id)}
