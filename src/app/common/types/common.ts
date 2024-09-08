@@ -43,3 +43,4 @@ export interface NoteProps {
   id: string;
   deleteNote: (id: string) => void;
 }
+

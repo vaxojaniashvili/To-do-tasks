@@ -3,18 +3,18 @@ import { useRef, useState, useEffect } from "react";
 import Button from "../Button/Button";
 import { NoteProps } from "@/app/common/types";
 import { InputField } from "..";
-
-const ItemTypes = {
-  NOTE: "note",
-};
+import { ItemTypes } from "../ItemTypes/ItemTypes";
 
 export default function Note({
   color,
   id,
   deleteNote,
   index,
-  moveNote
-}: NoteProps & { index: number; moveNote: (dragIndex: number, hoverIndex: number) => void }) {
+  moveNote,
+}: NoteProps & {
+  index: number;
+  moveNote: (dragIndex: number, hoverIndex: number) => void;
+}) {
   const [tasks, setTasks] = useState<string[]>([""]);
   const [taskList, setTaskList] = useState<string[]>([]);
   const [completedTasks, setCompletedTasks] = useState<boolean[]>([]);
@@ -64,7 +64,10 @@ export default function Note({
       setTaskList([...tasks]);
       setCompletedTasks([...completedTasks]);
       localStorage.setItem(`tasks-${id}`, JSON.stringify(tasks));
-      localStorage.setItem(`completedTasks-${id}`, JSON.stringify(completedTasks));
+      localStorage.setItem(
+        `completedTasks-${id}`,
+        JSON.stringify(completedTasks)
+      );
     }
   };
 
