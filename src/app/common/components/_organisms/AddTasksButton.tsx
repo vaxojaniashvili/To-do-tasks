@@ -1,9 +1,8 @@
 import { useState } from "react";
 import Button from "../_molecules/Button/Button";
+import { colors } from "@/app/themes";
 
-const colors = ["red", "blue", "green", "yellow", "purple"];
-
-export default function FloatingButton({
+export default function AddTasksButton({
   addNote,
 }: {
   addNote: (color: string) => void;

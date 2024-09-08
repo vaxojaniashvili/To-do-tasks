@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import Note from "@/app/common/components/_molecules/Note/Note";
-import FloatingButton from "@/app/common/components/_organisms/FloatingButton";
+import Note from "@/app/common/components/_molecules/tasks/TaskItems";
 import { NoteTypes } from "@/app/common/types";
+import AddTasksButton from "@/app/common/components/_organisms/AddTasksButton";
 
 export default function HomePage() {
   const [notes, setNotes] = useState<NoteTypes[]>([]);
@@ -37,7 +37,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <FloatingButton addNote={addNote} />
+      <AddTasksButton addNote={addNote} />
       <div className="flex flex-wrap">
         {notes.map((note) => (
           <Note

@@ -1,7 +1,6 @@
-import { InputTypes } from "@/app/common/types";
-import React from "react";
+import { InputFieldTypes } from "@/app/common/types";
 
-const Input = ({
+const InputField = ({
   type,
   className,
   key,
@@ -9,7 +8,7 @@ const Input = ({
   onChange,
   placeholder,
   onKeyDown,
-}: InputTypes) => {
+}: InputFieldTypes) => {
   return (
     <input
       onChange={onChange}
@@ -23,4 +22,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default InputField;

@@ -1,2 +1,4 @@
-export {default as Button} from "./Button/Button"
-export {default as Input} from "./Input/Input"
+import Button from "./Button/Button";
+import InputField from "./InputField/InputField";
+
+export { InputField, Button };

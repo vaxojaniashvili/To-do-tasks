@@ -1,5 +1,4 @@
 import { ButtonType } from "@/app/common/types";
-import React from "react";
 
 const Button = ({ onClick, className, children, key, style }: ButtonType) => {
   return (
