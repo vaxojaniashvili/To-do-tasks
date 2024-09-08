@@ -1,15 +1,10 @@
 import { useState, useEffect, KeyboardEvent } from "react";
-import Button from "../Button/Button";
-import Input from "../Input/Input";
 import Ul from "../Ul/Ul";
 import Li from "../Li/Li";
 import Span from "../Span/Span";
-
-interface NoteProps {
-  color: string;
-  id: string;
-  deleteNote: (id: string) => void;
-}
+import Button from "../Button/Button";
+import Input from "../Input/Input";
+import { NoteProps } from "@/app/common/types";
 
 export default function Note({ color, id, deleteNote }: NoteProps) {
   const [tasks, setTasks] = useState<string[]>([""]);
@@ -95,7 +90,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
       ))}
       <Button
         onClick={addTask}
-        className="bg-blue-500 text-white px-2 py-1 rounded"
+        className="bg-blue-500 text-white mx-2 px-2 py-1 rounded"
       >
         Add task
       </Button>

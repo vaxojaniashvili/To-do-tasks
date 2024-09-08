@@ -32,6 +32,12 @@ export interface SpanTypes {
   className?: string;
 }
 export interface NoteTypes {
-  id:string
-  color:string
+  id: string;
+  color: string;
+}
+
+export interface NoteProps {
+  color: string;
+  id: string;
+  deleteNote: (id: string) => void;
 }
