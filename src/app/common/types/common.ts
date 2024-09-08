@@ -37,6 +37,8 @@ export interface NoteTypes {
 }
 
 export interface NoteProps {
+  moveNote?: (dragIndex: number, hoverIndex: number) => void;
+  index?: number;
   color: string;
   id: string;
   deleteNote: (id: string) => void;
