@@ -1,12 +1,47 @@
-import { useState, useEffect, KeyboardEvent } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import { useRef, useState, useEffect } from "react";
 import Button from "../Button/Button";
 import { NoteProps } from "@/app/common/types";
 import { InputField } from "..";
 
-export default function Note({ color, id, deleteNote }: NoteProps) {
+const ItemTypes = {
+  NOTE: "note",
+};
+
+export default function Note({
+  color,
+  id,
+  deleteNote,
+  index,
+  moveNote
+}: NoteProps & { index: number; moveNote: (dragIndex: number, hoverIndex: number) => void }) {
   const [tasks, setTasks] = useState<string[]>([""]);
   const [taskList, setTaskList] = useState<string[]>([]);
   const [completedTasks, setCompletedTasks] = useState<boolean[]>([]);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [{ isDragging }, drag] = useDrag({
+    type: ItemTypes.NOTE,
+    item: { index },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const [, drop] = useDrop({
+    accept: ItemTypes.NOTE,
+    hover(item: { index: number }) {
+      if (item.index !== index) {
+        moveNote(item.index, index);
+        item.index = index;
+      }
+    },
+  });
+
+  drag(drop(ref));
+
+  const opacity = isDragging ? 0.4 : 1;
 
   useEffect(() => {
     const savedTasks = localStorage.getItem(`tasks-${id}`);
@@ -24,15 +59,12 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
 
   const handleSave = () => {
     if (tasks.some((task) => task.trim() === "")) {
-      alert("შენახვამდე შეავსე ტასკები");
+      alert("Please fill in all tasks before saving.");
     } else {
       setTaskList([...tasks]);
       setCompletedTasks([...completedTasks]);
       localStorage.setItem(`tasks-${id}`, JSON.stringify(tasks));
-      localStorage.setItem(
-        `completedTasks-${id}`,
-        JSON.stringify(completedTasks)
-      );
+      localStorage.setItem(`completedTasks-${id}`, JSON.stringify(completedTasks));
     }
   };
 
@@ -41,7 +73,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
       setTasks([...tasks, ""]);
       setCompletedTasks([...completedTasks, false]);
     } else {
-      alert("შეავსეთ თასქი");
+      alert("Please fill in the task before adding a new one.");
     }
   };
 
@@ -68,8 +100,9 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
 
   return (
     <div
+      ref={ref}
       className="p-4 rounded-lg shadow-md m-2"
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: color, opacity }}
     >
       {tasks.map((task, index) => (
         <InputField
@@ -82,7 +115,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
           }}
           className="mb-2 p-2 border border-gray-300 rounded"
           placeholder="New task..."
-          onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
+          onKeyDown={handleKeyDown}
         />
       ))}
       <Button
@@ -124,7 +157,7 @@ export default function Note({ color, id, deleteNote }: NoteProps) {
         onClick={downloadNote}
         className="absolute top-2 right-2 bg-gray-300 p-2 rounded"
       >
-        გადმოწერა
+        Download
       </Button>
     </div>
   );
