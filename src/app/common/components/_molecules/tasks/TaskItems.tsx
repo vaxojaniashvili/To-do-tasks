@@ -104,7 +104,7 @@ export default function Note({
   return (
     <div
       ref={ref}
-      className="p-4 rounded-lg shadow-md m-2"
+      className={`p-4 rounded-lg m-2 relative ${isDragging ? "" : "shadow-md"}`}
       style={{ backgroundColor: color, opacity }}
     >
       {tasks.map((task, index) => (
@@ -149,7 +149,7 @@ export default function Note({
           </li>
         ))}
       </ul>
-
+      <div className="flex justify-between items-center">
       <Button
         onClick={() => deleteNote(id)}
         className="bg-red-500 text-white px-2 py-1 rounded mt-2"
@@ -158,10 +158,11 @@ export default function Note({
       </Button>
       <Button
         onClick={downloadNote}
-        className="absolute top-2 right-2 bg-gray-300 p-2 rounded"
+        className="absolute bottom-2 right-2 bg-gray-300 p-2 rounded z-10"
       >
         Download
       </Button>
+      </div>
     </div>
   );
 }
