@@ -149,7 +149,7 @@ export default function Note({
           </li>
         ))}
       </ul>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between my-2 items-center">
       <Button
         onClick={() => deleteNote(id)}
         className="bg-red-500 text-white px-2 py-1 rounded mt-2"
@@ -158,7 +158,7 @@ export default function Note({
       </Button>
       <Button
         onClick={downloadNote}
-        className="absolute bottom-2 right-2 bg-gray-300 p-2 rounded z-10"
+        className="bottom-2 right-2 bg-gray-300 p-2 rounded z-10"
       >
         Download
       </Button>
